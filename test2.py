@@ -4,16 +4,18 @@ KEY = Fernet.generate_key()
 with open("secret.key", "wb") as key_file:
     key_file.write(KEY)
 
+def load_key(TargetFile : str):
 
-target_file = ["keylogger.py", "test.py", "test1.py",
-               "test2.py", "background_runner.py"]
-with open(target_file, "rb") as file:
-    original_data = file.read()
+    with open(TargetFile, "rb") as file:
+        original_data = file.read()
 
-cipher_suite = Fernet(KEY)
-encrypted_data = cipher_suite.encrypt(original_data)
+    cipher_suite = Fernet(KEY)
+    encrypted_data = cipher_suite.encrypt(original_data)
 
-with open(target_file, "wb") as file:
-    file.write(encrypted_data)
+    with open(TargetFile, "wb") as file:
+        file.write(encrypted_data)
 
-print(f"File '{target_file}' has been encrypted and is now protected.")
+    print(f"File '{TargetFile}' has been encrypted and is now protected.")
+
+if __name__ == '__main__':
+    load_key("test2.py")

