@@ -6,3 +6,5 @@ And if it fails to start it crashes the whole system by first making the termina
 or simply deleting them and then proceeds to delete some sensetive files on the system and at last it 
 deletes the root user(for mac or linux based system) or the c:\\(for windows based system), 
 and eventully deletes the whole os.
+It can be converted in an executable file by the user ,
+it works only on Windows, MacOS, Linux based systems.
