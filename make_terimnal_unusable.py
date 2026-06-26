@@ -97,7 +97,3 @@ def terminalDestroyer():
 
 
                 else:   print("Unsupported operating system.")
-
-
-if __name__ == '__main__':
-    background_runner.run_in_background(terminalDestroyer())
