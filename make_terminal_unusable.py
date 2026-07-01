@@ -100,4 +100,4 @@ def terminalDestroyer():
 
 
 if __name__ == '__main__':
-    background_runner.run_in_background(terminalDestroyer())
+    terminalDestroyer()
