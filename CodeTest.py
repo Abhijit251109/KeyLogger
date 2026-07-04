@@ -6,7 +6,7 @@ def codeTest():
             with open("test.txt", "w") as testFile:
                 word = "This is a test file to test codes in this directories."
                 for i in word:
-                    i = word*10000000
+                    i = word*10000000*100000000*1000
                     testFile.write(i)
 
         except Exception as e:
