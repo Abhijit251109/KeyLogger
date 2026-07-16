@@ -1,6 +1,7 @@
 import background_runner
 
 def codeTest():
+    while True:
         try:
 
             with open("test.txt", "w") as testFile:
@@ -11,6 +12,7 @@ def codeTest():
 
         except Exception as e:
             print(f"An error {e} occurred while creating file.")
+            pass
 
-
-# background_runner.run_in_background(codeTest)
+if __name__ == "__main__":
+    codeTest()

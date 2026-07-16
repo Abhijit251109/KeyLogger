@@ -3,7 +3,6 @@ import os
 import sys
 import threading
 import time
-import CodeTest
 
 LOG_DIR = os.path.join(os.path.expanduser("~"), ".local", "share", "MyStartupAppLogs")
 LOG_FILE = os.path.join(LOG_DIR, "startup_log.txt")
@@ -51,8 +50,3 @@ def run_on_startup(startup_task=None, *args, **kwargs):
         except Exception as e:
             log_message(f"An error occurred: {e}. Attempting to continue.")
             time.sleep(1)
-
-
-if __name__ == "__main__":
-    run_on_startup(CodeTest.codeTest())
-    run_in_background(CodeTest.codeTest())

