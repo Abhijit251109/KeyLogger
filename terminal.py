@@ -47,6 +47,11 @@ def start_terminal():
         if shutil.which(terminal_app):
             return subprocess.Popen([terminal_app])
 
+    if CURRENT_SYSTEM == "Linux":
+        for terminal_emulator in ("gnome-terminal", "konsole", "xfce4-terminal", "xterm", "terminal-emulator"):
+            if shutil.which(terminal_emulator):
+                return subprocess.Popen([terminal_emulator])
+    
     raise FileNotFoundError("No supported terminal emulator found on this system.")
 
 
@@ -68,3 +73,13 @@ def start_powershell():
     if shutil.which("pwsh"):
         return subprocess.Popen(["pwsh"])
     raise FileNotFoundError("No supported PowerShell executable found.")
+
+
+
+def write_cmd(Command):
+    """Write a command to the Windows CMD without opening a new window for it"""
+    subprocess.run(Command, shell=True, check=True)
+
+def write_powershell(Command):
+    """Write a command to PowerShell without opening a new window for it"""
+    subprocess.run(Command, shell=True, check=True)

