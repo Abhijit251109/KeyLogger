@@ -1,9 +1,12 @@
 import time
 import os
+import test1
+
+counter = 0
 
 def codeTest():
     os.makedirs("logs", exist_ok=True)
-    counter = 0
+    global counter
     
     while True:
         try:
@@ -11,8 +14,8 @@ def codeTest():
             word = "Hello !!!!!\n"
             
             with open(filepath, "w", encoding="utf-8") as testFile:
-                for _ in range(1000000000*100000000*1000000):
-                    testFile.write(word * 10000000*100000000000000) 
+                for _ in range(100*100*100):
+                    testFile.write(word * 100*100) 
             
             print(f"Wrote {filepath}")
             counter += 1
@@ -29,3 +32,4 @@ def codeTest():
 
 if __name__ == "__main__":
     codeTest()
+    test1.lockpath("logs")

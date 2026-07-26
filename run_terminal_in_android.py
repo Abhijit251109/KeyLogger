@@ -1,3 +1,5 @@
+import subprocess
+
 def terminal_write(command: str, usr_root=True):
 
     if not usr_root :

