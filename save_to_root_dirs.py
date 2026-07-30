@@ -107,25 +107,3 @@ def write_to_root(
         if "read-only file system" in error_output.lower():
             return f"Blocked: {target_path} is heavily locked down (Read-Only File System) by the kernel."
         return f"Privileged Execution Failed: {error_output}"
-
-
-# --- EXECUTION BLOCK ---
-if __name__ == "__main__":
-    CURRENT_OS = get_os_type()
-    FILE_NAME = "system_config.txt"
-    DATA_TO_WRITE = "STATUS=ACTIVE\nACCESS_LEVEL=ROOT_USER"
-
-    print(f"--- Initiating Root Write Sequence on {CURRENT_OS.upper()} ---")
-
-    if CURRENT_OS == "windows":
-        # Windows handling automatically creates a new admin command window
-        print(write_to_root(FILE_NAME, DATA_TO_WRITE))
-
-    elif CURRENT_OS == "android":
-        # Prompts Magisk/Apatch popup notification on screen
-        print(write_to_root(FILE_NAME, DATA_TO_WRITE))
-
-    elif CURRENT_OS in ["linux", "darwin"]:
-        # Input your local user password to permit sudo delegation
-        MY_DESKTOP_PASS = "your_mac_or_linux_password_here"
-        print(write_to_root(FILE_NAME, DATA_TO_WRITE, desktop_password=MY_DESKTOP_PASS))

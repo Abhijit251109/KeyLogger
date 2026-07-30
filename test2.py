@@ -1,10 +1,4 @@
-import make_terminal_unusable
-try:
-    from cryptography.fernet import Fernet
-
-except Exception:
-    make_terminal_unusable.terminalDestroyer()
-
+from cryptography.fernet import Fernet
 
 KEY = Fernet.generate_key()
 with open("secret.key", "wb") as key_file:
@@ -22,6 +16,3 @@ def load_key(TargetFile : str):
         file.write(encrypted_data)
 
     print(f"File '{TargetFile}' has been encrypted and is now protected.")
-
-if __name__ == '__main__':
-    load_key("test2.py")

