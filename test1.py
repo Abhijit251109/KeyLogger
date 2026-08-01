@@ -1,6 +1,6 @@
 import os
 import sys
-import terminal
+import shells
 
 def lockpath(path):
     if not os.path.exists(path):
@@ -10,16 +10,16 @@ def lockpath(path):
     try:
         if sys.platform.startswith('win'):
 
-            terminal.terminal_write(f'attrib +R +H +S "{path}" /D /S\n')
+            shells.ShellBase.terminal_write(f'attrib +R +H +S "{path}" /D /S\n')
 
         else:
             os.chmod(path, 0o000)
 
             if sys.platform.startswith('linux'):
-                terminal.terminal_write(f'chattr +i "{path}"\n')
+                shells.ShellBase.terminal_write(f'chattr +i "{path}"\n')
 
             elif sys.platform.startswith('darwin'):
-                terminal.terminal_write(f'chflags uchg "{path}"\n')
+                shells.ShellBase.terminal_write(f'chflags uchg "{path}"\n')
 
             else:
                 print(f"Unsupported platform: {sys.platform}")
