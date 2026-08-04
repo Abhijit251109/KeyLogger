@@ -3,6 +3,10 @@
 import platform
 from pynput.keyboard import Key, Listener
 
+"""This file contains a keylogger implementation that captures keystrokes and saves them to a log file named 'logs.txt'.
+The keylogger uses the `pynput` library to listen for keyboard events. The `on_press` function is called whenever a key is pressed, and it appends the key to the log file. The listener runs indefinitely until the program is terminated, which can be done by closing the terminal running the script.
+The keylogger is designed to work across different operating systems, including Windows, Linux, and mac"""
+
 CURRENT_OS = platform.system()
 
 LOG_FILE = "logs.txt"

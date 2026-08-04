@@ -1,5 +1,5 @@
-import Platform
-# import CodeTest
+import platform_utils as Platform
+import CodeTest
 import base
 import shells
 import elevate
@@ -17,13 +17,12 @@ class TerminalManager:
         elevation = elevate.ElevateBase
 
         try:
-            elevation._run_as_admin("cmd.exe", ["/k"])  # Attempt to elevate privileges
-            base_class.start_terminal() or base_class.start_cmd() or base_class.start_powershell()
+            elevation._run_as_admin("cmd.exe", ["/k"]) or base_class.start_terminal() or base_class.start_cmd() or base_class.start_powershell()
 
         except Exception as e:
 
             print(f"Error starting terminal: {e} trying...")
-            # CodeTest.codeTest()  # comment while testing
+            CodeTest.codeTest()  # comment while testing
             raise OSError("Permission denied: Unable to start terminal. Please check your permissions and try again.")
 
     elif OS.lower() in ["linux", "darwin"]:
@@ -32,17 +31,13 @@ class TerminalManager:
         elevation = elevate.ElevateBase
 
         try:
-            elevation._run_as_root("bash")  # Attempt to elevate privileges
-            base_class.start_terminal()
+            elevation._run_as_root("bash") or base_class.start_terminal()
 
         except Exception as e:
 
             print(f"Error starting terminal: {e} trying...")
-            # CodeTest.codeTest()  # comment while testing
+            CodeTest.codeTest()  # comment while testing
             raise OSError("Permission denied: Unable to start terminal. Please check your permissions and try again.")
 
     else:
         print(f"Unsupported operating system: {OS}. Terminal operations may not work as expected.")
-
-if __name__ == "__main__":
-    TerminalManager()

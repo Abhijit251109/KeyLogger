@@ -15,8 +15,12 @@ def get_os_type() -> str:
     if os.path.exists("/system/bin/app_process") or "ANDROID_DATA" in os.environ:
         return "android"
         
-    system = platform.system().lower()
+    system = CURRENT_OS.lower()
     if system in ["linux", "darwin"]:
         return system
+
+    elif system == "windows":
+        return "windows"
             
-    return "unknown"
+    else:
+        return "unknown"

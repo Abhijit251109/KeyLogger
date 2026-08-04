@@ -2,11 +2,13 @@ from abc import ABC, abstractmethod
 import subprocess
 import shutil
 import CodeTest
-import Platform
+import platform_utils as Platform
 from elevate import ElevateBase
 
 
 class TerminalBase(ABC):
+    """This is a OS specific class to handle terminal operations across different platforms.
+    It provides methods to start the default terminal, command shell, and PowerShell with elevated privileges"""
 
     @staticmethod
     @abstractmethod

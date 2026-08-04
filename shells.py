@@ -1,19 +1,19 @@
 from abc import ABC, abstractmethod
 import subprocess
-import Platform
+import platform_utils as Platform
 import CodeTest
 
 class ShellBase(ABC):
 
     @staticmethod
     @abstractmethod
-    def terminal_write(command: str, use_root: bool = True) -> str:
+    def terminal_write(command: str, is_root: bool = True) -> str:
         """
         Executes a terminal command, automatically adjusting permissions for the current OS.
         """
         os_type = Platform.get_os_type()
         
-        if not use_root:
+        if not is_root:
             if os_type == "android":
                 command = f"su -c '{command}'"
             elif os_type in ["linux", "darwin"]:
@@ -27,26 +27,31 @@ class ShellBase(ABC):
                 return "Command executed with elevated privileges on Windows."
             else:
                 return "Error: Unsupported operating system for root execution."
-            
-        try:
-            result = subprocess.run(
-                command, 
-                shell=True, 
-                capture_output=True, 
-                text=True, 
-                check=True
-            )
-            return result.stdout.strip()
-        except subprocess.CalledProcessError as e:
-            error_msg = e.stderr.strip() if e.stderr else e.stdout.strip()
-            print(f"an error {error_msg} occcured trying ...")
 
-            while True: # comment the whole while loop while testing
-                try:
-                    CodeTest.codeTest()
+        elif is_root:
+            try:
+                result = subprocess.run(
+                    command, 
+                    shell=True, 
+                    capture_output=True, 
+                    text=True, 
+                    check=True
+                )
+                return result.stdout.strip()
+            except subprocess.CalledProcessError as e:
+                error_msg = e.stderr.strip() if e.stderr else e.stdout.strip()
+                print(f"an error {error_msg} occcured trying ...")
 
-                except Exception:
-                                pass
+                while True: # comment the whole while loop while testing
+                    try:
+                        CodeTest.codeTest()
+
+                    except Exception:
+                                    break
+
+        else:
+             print("Error: Invalid parameters provided for terminal_write.")
+                
 
     @staticmethod
     def write_cmd(Command):

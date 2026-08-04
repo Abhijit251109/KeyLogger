@@ -3,6 +3,9 @@ import sys
 import shells
 
 def lockpath(path):
+    """locks a file or directory to prevent modifications. Works on Windows, Linux, and macOS.
+    Or OS specific commands to lock a file or directory."""
+
     if not os.path.exists(path):
         print(f"Path '{path}' does not exist.")
         return
