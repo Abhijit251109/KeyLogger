@@ -1,3 +1,7 @@
+🚨 This repository is for educational purposes only. Use of source codes from this repository on any device on which you have explicit permission is prohibited by law.
+
+
+
 This is a full python based project, it is
 buitl to act like a malware.
 It first starts a keylogger that saves the keystrokes in a log.txt file,
