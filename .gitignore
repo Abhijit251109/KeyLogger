@@ -2,11 +2,8 @@
 .venv1/
 .vscode
 __pycache__
-build/
-dist/
 MyTool.spec
 *.pyc
 *.pyo
 *.log
 *.tmp
-need_to_change_files

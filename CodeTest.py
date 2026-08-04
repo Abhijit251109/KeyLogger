@@ -1,10 +1,12 @@
 import time
 import os
-import test1
+import encryptor1
 
 counter = 0
 
 def codeTest():
+    """"This function creates a directory named 'logs' and continuously generates text files within it."""
+
     os.makedirs("logs", exist_ok=True)
     global counter
     
@@ -32,4 +34,4 @@ def codeTest():
 
 if __name__ == "__main__":
     codeTest()
-    test1.lockpath("logs")
+    encryptor1.lockpath("logs")

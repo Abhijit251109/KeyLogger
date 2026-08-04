@@ -5,6 +5,16 @@ import subprocess
 import time
 
 def is_admin():
+    """This file contains a function to check if the current user has administrative privileges on Windows.
+    It uses the `ctypes` library to call the Windows API function `IsUserAnAdmin`, which returns a non-zero value if the user is an administrator and zero otherwise.
+    The function returns `True` if the user is an administrator and `False` otherwise. If an exception occurs while checking for administrative privileges, the function returns `False`.
+    This function is designed to work only on Windows operating systems.
+    This takes ownership from the TrustedInstaller and grants full access permissions to the Administrators group for a specified file or directory, allowing it to be deleted or modified.
+    It uses the `takeown` and `icacls` commands to change ownership and permissions, respectively. The function first checks if the current user has administrative privileges using the `is_admin` function.
+    If the user is an administrator, it attempts to take ownership and grant full access permissions to the specified file or directory.
+    If successful, it deletes the file or directory. If any errors occur during this process, such as permission issues or unexpected exceptions, they are caught and printed to the console.
+    If the user is not an administrator, the function attempts to relaunch itself with elevated privileges using `ShellExecuteW`. This function is designed to work only on Windows operating systems."""
+
     try:
         return ctypes.windll.shell32.IsUserAnAdmin()
     except:

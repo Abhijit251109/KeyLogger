@@ -1,5 +1,9 @@
 from cryptography.fernet import Fernet
 
+"""This script generates a symmetric encryption key and saves it to a file named 'secret.key'.
+This key can be used for encrypting and decrypting files using the Fernet symmetric encryption algorithm.
+The generated key is a random 32-byte URL-safe base64-encoded string, which is"""
+
 KEY = Fernet.generate_key()
 with open("secret.key", "wb") as key_file:
     key_file.write(KEY)

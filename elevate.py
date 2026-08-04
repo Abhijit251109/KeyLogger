@@ -2,10 +2,13 @@ import os
 import subprocess
 import ctypes
 from abc import ABC, abstractmethod
-import Platform
+import platform_utils as Platform
 import shutil
 
 class ElevateBase(ABC):
+    """This is a OS specific class to handle elevation of privileges for executing commands in the terminal.
+      It provides methods to run commands as an administrator on Windows or as root on Linux and macOS."""
+
     @staticmethod
     @abstractmethod
     def _run_as_admin(executable, args=None):

