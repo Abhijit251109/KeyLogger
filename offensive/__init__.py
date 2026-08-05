@@ -1,0 +1,3 @@
+"""
+Offensive Security Framework package
+"""

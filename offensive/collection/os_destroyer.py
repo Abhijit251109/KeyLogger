@@ -1,8 +1,8 @@
 from abc import ABC
 import platform
 import shutil
-import keylogger
-import CodeTest as CT
+from offensive.collection import keylogger
+from offensive.collection import disk_fill as CT
 
 OS = platform.system()
 

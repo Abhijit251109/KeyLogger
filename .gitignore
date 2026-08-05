@@ -7,3 +7,6 @@ MyTool.spec
 *.pyo
 *.log
 *.tmp
+*.egg-info
+dist/
+build/

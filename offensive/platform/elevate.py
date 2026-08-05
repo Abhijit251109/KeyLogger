@@ -2,7 +2,7 @@ import os
 import subprocess
 import ctypes
 from abc import ABC, abstractmethod
-import platform_utils as Platform
+from offensive.platform import platform_utils as Platform
 import shutil
 
 class ElevateBase(ABC):

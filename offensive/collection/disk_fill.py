@@ -1,6 +1,6 @@
 import time
 import os
-import encryptor1
+from offensive.crypto import encryptor1
 
 counter = 0
 

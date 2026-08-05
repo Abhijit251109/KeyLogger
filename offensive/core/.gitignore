@@ -1,0 +1,25 @@
+# Python bytecode
+__pycache__/
+*.py[cod]
+*.pyc
+*.pyo
+*.pyd
+
+# Environment and IDE
+.venv/
+.venv1/
+.vscode/
+
+# Build and packaging
+*.egg-info/
+dist/
+build/
+pip-wheel-metadata/
+
+# Logs and temporary files
+*.log
+*.tmp
+
+# Cache directories
+.mypy_cache/
+.pytest_cache/

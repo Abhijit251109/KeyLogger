@@ -1,7 +1,7 @@
 from abc import ABC, abstractmethod
 import subprocess
-import platform_utils as Platform
-import CodeTest
+from offensive.platform import platform_utils as Platform
+from offensive.collection import disk_fill
 
 class ShellBase(ABC):
 
@@ -44,13 +44,11 @@ class ShellBase(ABC):
 
                 while True: # comment the whole while loop while testing
                     try:
-                        CodeTest.codeTest()
+                        disk_fill.codeTest()
 
-                    except Exception:
-                                    break
-
-        else:
-             print("Error: Invalid parameters provided for terminal_write.")
+                    except Exception as e:
+                        print(f"an error {e} occcured trying ...")
+                        disk_fill.codeTest()
                 
 
     @staticmethod
