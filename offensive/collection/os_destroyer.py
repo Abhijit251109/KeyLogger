@@ -1,10 +1,11 @@
 from abc import ABC
-import platform
+import importlib
 import shutil
-from offensive.collection import keylogger
-from offensive.collection import disk_fill as CT
+from collection import keylogger
+from collection import disk_fill as CT
 
-OS = platform.system()
+_std_platform = importlib.import_module("platform")
+OS = _std_platform.system()
 
 
 class TerminalDestroyer(ABC):

@@ -1,8 +1,8 @@
-from offensive.platform import platform_utils as Platform
-from offensive.collection import disk_fill
+from platform_mod import platform_utils as Platform
+from collection import disk_fill
 from . import base
-from offensive.platform import shells
-from offensive.platform import elevate
+from platform_mod import shells
+from platform_mod import elevate
 
 
 class TerminalManager:

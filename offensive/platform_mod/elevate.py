@@ -2,7 +2,7 @@ import os
 import subprocess
 import ctypes
 from abc import ABC, abstractmethod
-from offensive.platform import platform_utils as Platform
+from . import platform_utils
 import shutil
 
 class ElevateBase(ABC):
@@ -12,7 +12,7 @@ class ElevateBase(ABC):
     @staticmethod
     @abstractmethod
     def _run_as_admin(executable, args=None):
-        if Platform.CURRENT_OS.lower() != "windows":
+        if platform_utils.CURRENT_OS.lower() != "windows":
             command = [executable] + (args or [])
             return subprocess.Popen(command)
 
@@ -28,6 +28,7 @@ class ElevateBase(ABC):
             raise OSError(f"Failed to elevate {executable}: error code {ret}")
         return ret
 
+    @staticmethod
     def _find_windows_terminal():
         possible_terminals = ["wt.exe", "WindowsTerminal.exe", "cmd.exe", "powershell.exe"]
         for terminal in possible_terminals:
@@ -35,8 +36,9 @@ class ElevateBase(ABC):
                 return terminal
         return None
 
+    @staticmethod
     def _run_as_root(executable, args=None):
 
-        if Platform.CURRENT_OS.lower() in ["linux", "darwin"]:
+        if platform_utils.CURRENT_OS.lower() in ["linux", "darwin"]:
             command = [executable] + (args or [])
             return subprocess.Popen(["sudo"] + command)

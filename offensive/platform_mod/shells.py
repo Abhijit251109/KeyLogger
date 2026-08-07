@@ -1,7 +1,7 @@
 from abc import ABC, abstractmethod
 import subprocess
-from offensive.platform import platform_utils as Platform
-from offensive.collection import disk_fill
+from platform_mod import platform_utils as Platform
+from collection import disk_fill
 
 class ShellBase(ABC):
 

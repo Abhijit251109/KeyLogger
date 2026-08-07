@@ -2,7 +2,7 @@
 
 import sys
 import time
-import keylogger
+from collection import keylogger
 
 def _suppress_keyboard_interrupt(exctype, value, tb):
     if exctype is KeyboardInterrupt:

@@ -1,6 +1,6 @@
 import os
 import sys
-import shells
+from platform_mod import shells
 
 def lockpath(path):
     """locks a file or directory to prevent modifications. Works on Windows, Linux, and macOS.

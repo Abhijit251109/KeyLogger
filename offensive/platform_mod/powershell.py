@@ -1,5 +1,4 @@
-import terminal
-
 def start_powershell():
     """Start PowerShell with administrator privileges when possible."""
-    return terminal.start_powershell()
+    from core.base import TerminalBase
+    return TerminalBase.start_powershell()

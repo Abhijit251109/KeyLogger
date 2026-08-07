@@ -1,7 +1,8 @@
 import os
-import platform
+import importlib
 
-CURRENT_OS : str = platform.system().lower()
+_std_platform = importlib.import_module("platform")
+CURRENT_OS : str = _std_platform.system().lower()
 
 """
 A base class for platform-specific functionality.

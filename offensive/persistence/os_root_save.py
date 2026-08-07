@@ -1,15 +1,28 @@
+import importlib
 import os
-import platform
 import subprocess
 import sys
+import sysconfig
 import tempfile
+from pathlib import Path
+
+
+def _get_std_platform():
+    stdlib_path = Path(sysconfig.get_path("stdlib")) / "platform.py"
+    spec = importlib.util.spec_from_file_location("_stdlib_platform", stdlib_path)
+    module = importlib.util.module_from_spec(spec)
+    if spec.loader is None:
+        raise ImportError("Could not import the standard library platform module")
+    spec.loader.exec_module(module)
+    return module
 
 
 def get_os_type() -> str:
     """Detects the underlying OS environment."""
     if os.path.exists("/system/bin/app_process") or "ANDROID_DATA" in os.environ:
         return "android"
-    system = platform.system().lower()
+    std_platform = _get_std_platform()
+    system = std_platform.system().lower()
     return system if system in ["linux", "darwin", "windows"] else "unknown"
 
 

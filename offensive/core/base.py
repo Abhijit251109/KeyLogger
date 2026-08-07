@@ -1,8 +1,8 @@
 import subprocess
 import shutil
-from offensive.collection import disk_fill
-from offensive.platform import platform_utils as Platform
-from offensive.platform.elevate import ElevateBase
+from collection import disk_fill
+from platform_mod import platform_utils as Platform
+from platform_mod.elevate import ElevateBase
 
 
 class TerminalBase():
