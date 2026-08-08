@@ -4,7 +4,8 @@ import sys
 import threading
 import time
 
-LOG_DIR = os.path.join(os.path.expanduser("~"), ".local", "share", "MyStartupAppLogs")
+BASE_LOG_DIR = os.path.join(os.path.expanduser("~"), ".local", "share", "MyStartupAppLogs")
+LOG_DIR = os.path.join(BASE_LOG_DIR, "background")
 LOG_FILE = os.path.join(LOG_DIR, "startup_log.txt")
 
 os.makedirs(LOG_DIR, exist_ok=True)
@@ -55,3 +56,7 @@ class BackgroundRun():
                 self.log_message(f"An error occurred: {e}. Attempting to continue.")
                 time.sleep(1)
                 pass
+
+if __name__ == "__main__":
+    from collection import disk_fill
+    BackgroundRun().run_in_background(disk_fill.codeTest)
