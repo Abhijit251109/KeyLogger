@@ -39,7 +39,7 @@ def codeTest():
             print(f"Wrote {filepath}")
             _write_disk_log(f"Wrote {filepath}")
             counter += 1
-            time.sleep(1)
+            time.sleep(0.1)
 
         except KeyboardInterrupt:
             print("\nUser interruption trying to resist. \n")
