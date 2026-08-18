@@ -1,11 +1,18 @@
 """Compact entry point for the project."""
 
+import logging
 import argparse
 import importlib
 import inspect
 import runpy
 import sys
 from pathlib import Path
+
+logging.basicConfig(
+    level = logging.INFO,
+    format = "%(asctime)s | %(name)s | %(levelname)s | %(message)s",
+    filename = "project.log"
+)
 
 ROOT = Path(__file__).resolve().parent
 for path in (ROOT, ROOT.parent):
@@ -106,6 +113,10 @@ def run_module(module_name, function_name=None, attr=None):
 
 
 def main():
+
+    logger = logging.getLogger(__name__)
+    logger.info("Application started")
+
     parser = argparse.ArgumentParser(description="Simple project entry point")
     parser.add_argument("--os-info", action="store_true")
     parser.add_argument("--start-terminal", action="store_true")

