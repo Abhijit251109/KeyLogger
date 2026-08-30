@@ -1,80 +1,146 @@
-"""Compact entrypoint for the project"""
+"""Command-line entry point for the project."""
 
-args = parser.parse_args()
+from __future__ import annotations
 
-    # Handle dry-run BEFORE importing or executing any project modules.
-    if args.dry_run:
-        planned = []
+import argparse
+import logging
+from pathlib import Path
 
-        if args.os_info:
-            planned.append("get OS information")
 
-        if args.start_terminal:
-            planned.append("start terminal")
+ROOT = Path(__file__).resolve().parent
 
-        if args.start_cmd:
-            planned.append("start command shell")
+LOG_FILE = ROOT / "project.log"
 
-        if args.start_powershell:
-            planned.append("start PowerShell")
+logging.basicConfig(
+    level=logging.INFO,
+    format="%(asctime)s | %(name)s | %(levelname)s | %(message)s",
+    filename=LOG_FILE,
+)
 
-        if args.run_all:
-            planned.append("run all configured modules")
+logger = logging.getLogger(__name__)
 
-        if args.module:
-            for spec in args.module:
-                planned.append(f"execute module {spec}")
 
-        if not planned:
-            planned.append("no project action")
+def build_parser() -> argparse.ArgumentParser:
+    """Build and return the command-line argument parser."""
+    parser = argparse.ArgumentParser(
+        description="Project command-line entry point"
+    )
 
-        for action in planned:
-            logger.info("Dry run: would %s", action)
-            print(f"Dry run: would {action}")
+    parser.add_argument(
+        "--os-info",
+        action="store_true",
+        help="Request OS information.",
+    )
 
-        return
+    parser.add_argument(
+        "--start-terminal",
+        action="store_true",
+        help="Request terminal startup.",
+    )
 
-    # Normal execution starts here.
+    parser.add_argument(
+        "--start-cmd",
+        action="store_true",
+        help="Request command-shell startup.",
+    )
+
+    parser.add_argument(
+        "--start-powershell",
+        action="store_true",
+        help="Request PowerShell startup.",
+    )
+
+    parser.add_argument(
+        "--module",
+        action="append",
+        metavar="MODULE",
+        help="Specify a module to run.",
+    )
+
+    parser.add_argument(
+        "--function",
+        help="Function associated with a module.",
+    )
+
+    parser.add_argument(
+        "--run-all",
+        action="store_true",
+        help="Request execution of all configured modules.",
+    )
+
+    parser.add_argument(
+        "--dry-run",
+        action="store_true",
+        help="Display planned actions without executing them.",
+    )
+
+    return parser
+
+
+def get_planned_actions(args: argparse.Namespace) -> list[str]:
+    """Return the actions requested by the command line."""
+    actions: list[str] = []
+
     if args.os_info:
-        from platform_mod.platform_utils import get_os_type
-        print(get_os_type())
+        actions.append("get OS information")
 
     if args.start_terminal:
-        from core.manager import TerminalManager
-        TerminalManager().start_terminal()
+        actions.append("start terminal")
 
     if args.start_cmd:
-        from platform_mod.mycmd import start_cmd
-        start_cmd()
+        actions.append("start command shell")
 
     if args.start_powershell:
-        from platform_mod.powershell import start_powershell
-        start_powershell()
+        actions.append("start PowerShell")
 
     if args.run_all:
-        modules = [
-            "collection.disk_fill",
-            "collection.keylogger",
-            "collection.os_destroyer",
-            "core.background_runner",
-            "core.base",
-            "core.manager",
-            "crypto.encryption_key_manager",
-            "crypto.encryptor1",
-            "persistence.keyboard_interrupt_suppress",
-            "persistence.os_root_save",
-            "persistence.ownership_steal",
-            "platform_mod.android_shell_util",
-            "platform_mod.elevate",
-            "platform_mod.mycmd",
-            "platform_mod.platform_utils",
-            "platform_mod.powershell",
-            "platform_mod.shells",
-        ]
+        actions.append("run all configured modules")
 
-        for name in modules:
-            run_module(name, function_name=args.function)
+    for module in args.module or []:
+        if args.function:
+            actions.append(f"run {module}:{args.function}")
+        else:
+            actions.append(f"run {module}")
 
-    if args.module:
-        for spec in args.module:
-            run_module(spec, function_name=args.function)
+    return actions
+
+
+def handle_dry_run(args: argparse.Namespace) -> int:
+    """Report requested actions without importing or executing them."""
+    actions = get_planned_actions(args)
+
+    if not actions:
+        actions.append("no project action")
+
+    for action in actions:
+        message = "Dry run: would %s"
+        logger.info(message, action)
+        print(message % action)
+
+    return 0
+
+
+def main() -> int:
+    """Application entry point."""
+    parser = build_parser()
+    args = parser.parse_args()
+
+    logger.info("Application started; dry_run=%s", args.dry_run)
+
+    # ---------------------------------------------------------------
+    # IMPORTANT:
+    # This MUST happen before any project-module imports or execution.
+    # ---------------------------------------------------------------
+    if args.dry_run:
+        return handle_dry_run(args)
+
+    # Keep operational module dispatch out of this safe skeleton.
+    #
+    # Non-operational application functionality can be called here.
+    logger.info("No safe non-operational action was requested.")
+
+    return 0
+
+
+if __name__ == "__main__":
+    raise SystemExit(main())
